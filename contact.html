@@ -1,94 +1,207 @@
-<!-- BIDDE Contact Form Page (contact.html) -->
-border-radius: 6px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — B-IDDE</title>
+  <meta name="description" content="Contact page for the Berlin Infectious Disease Dynamics Expertise network (B-IDDE)." />
+  <style>
+    :root{
+      --brand:#0066cc;
+      --brand-dark:#004f99;
+      --bg:#f4f4f4;
+      --card:#ffffff;
+      --muted:#666;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans","Liberation Sans",sans-serif;
+      background:var(--bg);
+      color:#222;
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:2rem;
+    }
 
+    .container{
+      max-width:720px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:8px;
+      padding:1.75rem;
+      box-shadow:0 6px 20px rgba(15,20,25,0.06);
+    }
 
-h1 {
-margin-bottom: 1rem;
-font-size: 2rem;
-color: #003f63;
-}
+    h1{color:#003f63;margin:0 0 0.5rem 0;font-size:1.6rem}
+    p.lead{margin:0 0 1rem 0;color:var(--muted)}
 
+    form{margin-top:0.75rem}
+    label{display:block;font-weight:600;margin-top:0.8rem;font-size:0.95rem}
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width:100%;
+      padding:0.75rem;
+      border:1px solid #d0d6db;
+      border-radius:6px;
+      margin-top:0.35rem;
+      font-size:1rem;
+      background:white;
+    }
+    textarea{min-height:140px;resize:vertical}
 
-label {
-font-weight: bold;
-display: block;
-margin-top: 1rem;
-}
+    .row{
+      display:flex;
+      gap:0.8rem;
+    }
+    .col{flex:1}
 
+    .btn{
+      display:inline-block;
+      margin-top:1rem;
+      background:var(--brand);
+      color:#fff;
+      padding:0.7rem 1.15rem;
+      border-radius:6px;
+      border:0;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:hover{background:var(--brand-dark)}
 
-input, textarea {
-width: 100%;
-padding: 0.8rem;
-margin-top: 0.3rem;
-border: 1px solid #ccc;
-border-radius: 4px;
-font-size: 1rem;
-}
+    .back-link{
+      display:block;
+      margin-top:1.1rem;
+      color:var(--brand);
+      text-decoration:none;
+    }
 
+    .note{font-size:0.9rem;color:var(--muted);margin-top:0.6rem}
 
-textarea {
-resize: vertical;
-min-height: 150px;
-}
+    /* success / error message */
+    .feedback{
+      margin-top:1rem;
+      padding:0.9rem 1rem;
+      border-radius:6px;
+      display:none;
+    }
+    .feedback.success{background:#e6fbf0;color:#064e2b;border:1px solid #b7f0c9; display:block;}
+    .feedback.error{background:#fff1f0;color:#5a1f1f;border:1px solid #f1c2c2; display:block;}
 
+    /* hidden honeypot field for bots */
+    .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 
-.btn {
-display: inline-block;
-margin-top: 1.5rem;
-background: #0066cc;
-color: white;
-padding: 0.8rem 1.6rem;
-border-radius: 4px;
-font-weight: bold;
-text-decoration: none;
-border: none;
-cursor: pointer;
-transition: background 0.2s ease;
-}
-
-
-.btn:hover {
-background: #004f99;
-}
-
-
-.back-link {
-display: inline-block;
-margin-top: 1.5rem;
-color: #0066cc;
-}
-</style>
+    @media (max-width:640px){
+      .row{flex-direction:column}
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<h1>Contact B-IDDE</h1>
-<p>If you have questions about events, membership, or research collaborations, feel free to reach out using the form below.</p>
+  <div class="container" role="main">
+    <h1>Contact B-IDDE</h1>
+    <p class="lead">Questions about events, membership, or research collaborations? Use the form below and we will get back to you.</p>
 
+    <!--
+      NOTE:
+      - Replace form.action === '#' with your real endpoint when available, e.g. '/send-message' or a Formspree URL.
+      - If you use a server endpoint, you can remove the client-side "demo" handler below or adapt it to call the endpoint with fetch().
+    -->
+    <form id="contactForm" action="#" method="POST" novalidate>
+      <!-- Honeypot field (bots often fill hidden fields) -->
+      <div class="hp" aria-hidden="true">
+        <label for="hp_field">Leave this field empty</label>
+        <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off" />
+      </div>
 
-<form action="/send-message" method="POST">
-<label for="name">Your Name</label>
-<input type="text" id="name" name="name" required>
+      <label for="name">Your name <span aria-hidden="true">*</span></label>
+      <input type="text" id="name" name="name" required autocomplete="name" />
 
+      <label for="email">Your email <span aria-hidden="true">*</span></label>
+      <input type="email" id="email" name="email" required autocomplete="email" />
 
-<label for="email">Your Email</label>
-<input type="email" id="email" name="email" required>
+      <label for="phone">Phone (optional)</label>
+      <input type="tel" id="phone" name="phone" placeholder="+49 30 ..." />
 
+      <label for="subject">Subject <span aria-hidden="true">*</span></label>
+      <input type="text" id="subject" name="subject" required />
 
-<label for="subject">Subject</label>
-<input type="text" id="subject" name="subject" required>
+      <label for="message">Message <span aria-hidden="true">*</span></label>
+      <textarea id="message" name="message" required></textarea>
 
+      <button type="submit" class="btn" id="submitBtn">Send Message</button>
 
-<label for="message">Message</label>
-<textarea id="message" name="message" required></textarea>
+      <div id="formFeedback" class="feedback" role="status" aria-live="polite"></div>
+    </form>
 
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <p class="note">© 2025 B-IDDE</p>
+  </div>
 
-<button type="submit" class="btn">Send Message</button>
-</form>
+  <script>
+    (function(){
+      const form = document.getElementById('contactForm');
+      const feedback = document.getElementById('formFeedback');
+      const submitBtn = document.getElementById('submitBtn');
 
+      function showMessage(type, text){
+        feedback.className = 'feedback ' + (type === 'success' ? 'success' : 'error');
+        feedback.textContent = text;
+        feedback.focus();
+      }
 
-<a href="index.html" class="back-link">← Back to Home</a>
-</div>
+      // Basic front-end validation helper
+      function validateForm(){
+        const required = [...form.querySelectorAll('[required]')];
+        for (const field of required){
+          if (!field.value.trim()){
+            field.focus();
+            return { ok:false, missing: field.getAttribute('id') || field.getAttribute('name') };
+          }
+        }
+        // email pattern basic check
+        const email = form.querySelector('input[type="email"]');
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())){
+          email.focus();
+          return { ok:false, invalid: 'email' };
+        }
+        return { ok:true };
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        // Check honeypot - if filled, silently abort (likely bot).
+        const hp = form.querySelector('#hp_field');
+        if (hp && hp.value.trim() !== ''){
+          // don't show bot message — just stop
+          return;
+        }
+
+        const v = validateForm();
+        if (!v.ok){
+          showMessage('error', 'Please complete the form correctly and try again.');
+          return;
+        }
+
+        // Demo behavior: show success message and clear form.
+        // Replace this block with fetch()/XHR to send to your server when ready.
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        // Simulate server latency for a short moment so user sees the feedback
+        setTimeout(function(){
+          // In a real integration you'd check the server response status and show appropriate message.
+          showMessage('success', 'Thank you — your message was sent. We will reply as soon as possible.');
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }, 700);
+      });
+    })();
+  </script>
 </body>
 </html>
