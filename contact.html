@@ -134,7 +134,8 @@
 
       <button type="submit" class="btn" id="submitBtn">Send Message</button>
 
-      <div id="formFeedback" class="feedback" role="status" aria-live="polite"></div>
+      <!-- Make feedback programmatically focusable with tabindex="-1" so .focus() works safely -->
+      <div id="formFeedback" class="feedback" role="status" aria-live="polite" tabindex="-1"></div>
     </form>
 
     <a href="index.html" class="back-link">← Back to Home</a>
@@ -143,27 +144,35 @@
 
   <script>
     (function(){
-      const form = document.getElementById('contactForm');
-      const feedback = document.getElementById('formFeedback');
-      const submitBtn = document.getElementById('submitBtn');
+      var form = document.getElementById('contactForm');
+      var feedback = document.getElementById('formFeedback');
+      var submitBtn = document.getElementById('submitBtn');
 
       function showMessage(type, text){
+        if (!feedback) return;
         feedback.className = 'feedback ' + (type === 'success' ? 'success' : 'error');
         feedback.textContent = text;
-        feedback.focus();
+        // ensure focus works: feedback has tabindex="-1" in the markup
+        try {
+          feedback.focus();
+        } catch (err) {
+          // focus failed gracefully — not critical
+          // console.warn('Feedback focus failed', err);
+        }
       }
 
       // Basic front-end validation helper
       function validateForm(){
-        const required = [...form.querySelectorAll('[required]')];
-        for (const field of required){
-          if (!field.value.trim()){
+        var required = form.querySelectorAll('[required]');
+        for (var i = 0; i < required.length; i++){
+          var field = required[i];
+          if (!field.value || !field.value.trim()){
             field.focus();
             return { ok:false, missing: field.getAttribute('id') || field.getAttribute('name') };
           }
         }
         // email pattern basic check
-        const email = form.querySelector('input[type="email"]');
+        var email = form.querySelector('input[type="email"]');
         if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())){
           email.focus();
           return { ok:false, invalid: 'email' };
@@ -174,14 +183,17 @@
       form.addEventListener('submit', function(e){
         e.preventDefault();
 
+        // defensive checks
+        if (!form) return;
+
         // Check honeypot - if filled, silently abort (likely bot).
-        const hp = form.querySelector('#hp_field');
-        if (hp && hp.value.trim() !== ''){
+        var hp = form.querySelector('#hp_field');
+        if (hp && hp.value && hp.value.trim() !== ''){
           // don't show bot message — just stop
           return;
         }
 
-        const v = validateForm();
+        var v = validateForm();
         if (!v.ok){
           showMessage('error', 'Please complete the form correctly and try again.');
           return;
@@ -196,11 +208,11 @@
         setTimeout(function(){
           // In a real integration you'd check the server response status and show appropriate message.
           showMessage('success', 'Thank you — your message was sent. We will reply as soon as possible.');
-          form.reset();
+          try { form.reset(); } catch (err) { /* ignore */ }
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Message';
         }, 700);
-      });
+      }, false);
     })();
   </script>
 </body>
