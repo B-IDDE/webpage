@@ -1,98 +1,122 @@
-<!-- Updated B-IDDE Website (Enhanced Layout Inspired by HTML5UP's "Editorial") -->
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>B-IDDE — Berlin Infectious Disease Dynamics Expertise</title>
-<style>
-/* Reset */
-*, *::before, *::after {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B-IDDE — Berlin Infectious Disease Dynamics Expertise</title>
+  <style>
+    /* Basic reset + body styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
+    a { color: #0066cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header { background: #004d7a; color: white; padding: 1rem 2rem; }
+    header .logo { font-size: 1.5rem; font-weight: bold; }
+    nav ul { list-style: none; display: flex; gap: 1rem; margin-top: 0.5rem; }
+    nav a { color: white; font-weight: bold; }
+
+    .container { display: flex; flex-wrap: wrap; max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+    main { flex: 1; min-width: 300px; padding-right: 2rem; }
+    aside { width: 250px; min-width: 200px; background: #eef2f5; padding: 1rem; border-radius: 4px; }
+
+    section { margin-bottom: 2rem; }
+    h1, h2 { margin-bottom: 0.5rem; }
+    ul { margin-left: 1.2rem; margin-top: 0.5rem; }
+    li { margin-bottom: 0.5rem; }
+
+    footer { background: #333; color: #ccc; text-align: center; padding: 1rem 0; margin-top: 2rem; }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      aside { margin-top: 2rem; width: 100%; }
+    }
+
+    .btn {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: #004d99;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Berlin Infectious Disease Dynamics Expertise network (BIDDE)</div>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+         <li><a href="events.html">Events</a></li>
+         <li><a href="contact.html">Contact</a></li
+        <!-- add more links here as needed -->
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <main>
+      <section>
+        <p> <strong>Aim:</strong></p>  
+        <p>To connect those based in Berlin with an interest in infectious disease dynamics and advanced analytical methods.</p>
+        <p>To update each other on recent and current research and other relevant developments in the field.</p>
+        <p>To give early career researchers an opportunity to informally share their research, practice their presentation skills and get input from a range of experts.</p>
+        <a href="about.html" class="btn">Learn More</a>
+      </section>
+
+      <section>
+        <h2>Events</h2>
+        <ul>
+          <li>
+            <strong>9 December</strong><br />
+            Training: intro to MCMC<br />
+            Seminar: The role of modelling in the Danish COVID-19 response
+          </li>
+          <li>
+            <strong>13 Jan 2026</strong><br />
+            Training: RShiny<br />
+            Seminar: How AI is reinventing mathematical modelling
+          </li>
+          <li>
+            <strong>10 Feb 2026</strong><br />
+            Training: ODIN2<br />
+            Seminar: to be confirmed<br />
+            Place: (TBD)
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>Email: contact@example.com</p>
+      </section>
+    </main>
+
+    <aside>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="about.html">About B-IDDE</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <h3>Disclaimer</h3>
+      <p>© 2025 B-IDDE. All rights reserved.</p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>B-IDDE — Berlin Infectious Disease Dynamics Expertise.</p>
+  </footer>
+</body>
+</html>
 
 
-body {
-font-family: "Helvetica Neue", Arial, sans-serif;
-background: #f4f4f4;
-color: #333;
-line-height: 1.7;
-}
 
 
-/* Layout */
-header {
-background: #003f63;
-padding: 2rem 2rem 1.5rem;
-color: white;
-}
-
-
-header .logo {
-font-size: 2rem;
-font-weight: bold;
-letter-spacing: 0.5px;
-}
-
-
-nav ul {
-display: flex;
-list-style: none;
-gap: 1.5rem;
-margin-top: 1rem;
-flex-wrap: wrap;
-}
-
-
-nav a {
-color: white;
-text-decoration: none;
-font-weight: 600;
-}
-nav a:hover {
-text-decoration: underline;
-}
-
-
-.wrapper {
-display: grid;
-grid-template-columns: 1fr 300px;
-gap: 2rem;
-max-width: 1200px;
-margin: 3rem auto;
-padding: 0 1.5rem;
-}
-
-
-main section {
-margin-bottom: 3rem;
-background: white;
-padding: 2rem;
-border-radius: 6px;
-box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-
-h1, h2, h3 {
-margin-bottom: 1rem;
-font-weight: 700;
-}
-
-
-p {
-margin-bottom: 1rem;
-}
-
-
-ul li {
-margin-bottom: 0.7rem;
-}
-
-
-/* Sidebar */
-aside {
-background: #e9eef3;
-padding: 2rem;
-border-radius: 6px;
